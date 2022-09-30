@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schoolmanagement/auth_controller.dart';
+import 'package:schoolmanagement/controllers/auth_controller.dart';
 
 class StudentPage extends StatefulWidget {
   const StudentPage({

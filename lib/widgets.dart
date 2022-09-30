@@ -5,13 +5,12 @@ class CustomWidgets {
   static void showSnackBar({
     required String title,
     required String message,
-    required Color backGroundColor,
   }) {
     Get.snackbar(
       title,
       message,
-      colorText: Colors.white,
-      backgroundColor: backGroundColor,
+      colorText: Colors.black,
+      backgroundColor: Colors.purple.shade50,
       snackPosition: SnackPosition.BOTTOM,
     );
   }

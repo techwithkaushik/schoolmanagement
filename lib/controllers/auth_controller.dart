@@ -1,28 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schoolmanagement/pages/admin_page.dart';
 import 'package:schoolmanagement/widgets.dart';
 
-import 'pages/login_page.dart';
-import 'pages/parents_page.dart';
-import 'pages/student_page.dart';
-import 'pages/teacher_page.dart';
+import '../pages/login_page.dart';
+import '../pages/parents_page.dart';
+import '../pages/student_page.dart';
+import '../pages/teacher_page.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
 
   late Rx<User?> _user;
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   @override
   void onReady() {
     super.onReady();
-    _user = Rx<User?>(auth.currentUser);
-    _user.bindStream(auth.userChanges());
+    _user = Rx<User?>(_auth.currentUser);
+    _user.bindStream(_auth.userChanges());
     ever(_user, _initialScreen);
   }
 
@@ -30,11 +29,11 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => const LoginPage());
     } else {
-      List data = await db
+      List data = await _db
           .collection("Users")
           .where("uId", isEqualTo: user.uid)
           .get()
-          .then((value) => value.docs);
+          .then((value) => value.docs.obs);
       if (data.isNotEmpty) {
         String role = data.first["role"];
         if (role == "admin") {
@@ -50,46 +49,46 @@ class AuthController extends GetxController {
               StudentPage(uId: user.uid, email: user.email!, role: role));
         } else {
           CustomWidgets.showSnackBar(
-              title: "User Error",
-              message: "Role Not Found",
-              backGroundColor: Colors.red);
+            title: "User Error",
+            message: "Role Not Found",
+          );
         }
       } else {
         CustomWidgets.showSnackBar(
-            title: "User Error",
-            message: "User Not Found",
-            backGroundColor: Colors.red);
+          title: "User Error",
+          message: "User Not Found",
+        );
       }
     }
   }
 
   void loginEmailPasss(String email, pass) async {
     try {
-      await auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: email,
         password: pass,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         CustomWidgets.showSnackBar(
-            title: "Login Error",
-            message: "Email Not Found",
-            backGroundColor: Colors.red);
+          title: "Login Error",
+          message: "Email Not Found",
+        );
       } else if (e.code == 'wrong-password') {
         CustomWidgets.showSnackBar(
-            title: "Login Error",
-            message: "Incorrect Password",
-            backGroundColor: Colors.red);
+          title: "Login Error",
+          message: "Incorrect Password",
+        );
       } else {
         CustomWidgets.showSnackBar(
-            title: "Login Error",
-            message: e.message.toString(),
-            backGroundColor: Colors.red);
+          title: "Login Error",
+          message: e.message.toString(),
+        );
       }
     }
   }
 
   void logOut() async {
-    await auth.signOut();
+    await _auth.signOut();
   }
 }

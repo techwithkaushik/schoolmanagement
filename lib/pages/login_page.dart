@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:schoolmanagement/auth_controller.dart';
+import 'package:schoolmanagement/controllers/auth_controller.dart';
 
 import '../constants.dart';
 
@@ -119,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         validator: (value) {
-          if (value!.isEmpty) {
+          if (value == null || value.isEmpty) {
             return "Please enter password";
           } else if (value.length < 6) {
             return "Please enter more then 5 characters";

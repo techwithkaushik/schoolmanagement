@@ -1,9 +1,14 @@
 name: Flutter CI
 on:
   push:
-    branches: [ "main" ]
+    branch: [ "main" ]
+    paths-ignore:
+      - "**.md"
   pull_request:
-    branches: [ "main" ]
+    branch: [ "main" ]
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch: { }
 
 jobs:
   build:

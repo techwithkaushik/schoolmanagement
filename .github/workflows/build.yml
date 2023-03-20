@@ -19,7 +19,13 @@ jobs:
       - run: flutter pub get
       - run: flutter format --set-exit-if-changed .
 #       - run: flutter analyze .
-      - run: flutter build apk --release --split-per-abi
+      - name: Build APK
+        run: flutter build apk --release --split-per-abi
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+
       - uses: actions/upload-artifact@v1
         with:
           name: schoolmanagement-arm64-v8a-release

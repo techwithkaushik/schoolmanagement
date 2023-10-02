@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/l2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toTopOf="@id/l3"
+        app:layout_constraintTop_toBottomOf="@id/l2"
+        android:id="@+id/addRecyclerView" />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="20dp"
+        android:id="@+id/l3">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Student Details" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:placeholderText="Enter Name"
+            android:hint="Name"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="16dp"
+            android:id="@+id/nameLyt">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:id="@+id/nameEdt" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:placeholderText="Enter Father Name"
+            android:hint="Father Name"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="16dp"
+            android:id="@+id/fNameLyt">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:id="@+id/fNameEdt" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:placeholderText="Select Class Name"
+            android:hint="Class Name"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxCornerRadiusTopStart="16dp"
+            android:id="@+id/classLyt">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="none"
+                android:id="@+id/classEdt" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:enabled="false"
+            android:id="@+id/save"
+            android:text="Save" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

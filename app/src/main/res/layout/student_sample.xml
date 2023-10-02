@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="student"
+            type="com.ask2784.schoolmanagemant.models.Student" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="20dp"
+        app:contentPaddingBottom="10dp"
+        app:contentPaddingTop="10dp"
+        app:contentPaddingRight="15dp"
+        app:contentPaddingLeft="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="#ffcff0c0"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="4dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text="S. No." />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text="Name" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text="Class" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text=":" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text=":" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text=":" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/sr_no"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text="@{String.valueOf(student.getId())}" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/name"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text="@{student.getName()}" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/class_name"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:text="@{student.getClassName()}" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

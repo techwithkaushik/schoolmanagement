@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">School Managemant</string>
+    <string-array name="filterby">
+        <item>Name</item>
+        <item>Father Name</item>
+        <item>By Class</item>
+    </string-array>
+    
+    <string-array name="classes">
+        <item>Nursery</item>
+        <item>L.K.G.</item>
+        <item>U.K.G.</item>
+        <item>1st</item>
+        <item>2nd</item>
+        <item>3rd</item>
+        <item>4th</item>
+        <item>5th</item>
+        <item>6th</item>
+        <item>7th</item>
+        <item>8th</item>
+        <item>9th</item>
+        <item>10th</item>
+        <item>11th</item>
+        <item>12th</item>
+    </string-array>
+</resources>

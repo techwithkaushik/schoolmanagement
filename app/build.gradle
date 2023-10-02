@@ -1,0 +1,73 @@
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.ask2784.schoolmanagemant'
+    compileSdk 34
+    
+    defaultConfig {
+        applicationId "com.ask2784.schoolmanagemant"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        
+        vectorDrawables { 
+            useSupportLibrary true
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile = file(System.getenv("SIGNING_KEY_STORE"))
+            storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    
+}
+
+dependencies {
+    def room_version = "2.6.0-rc01"
+
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.android.material:material:1.9.0"
+    
+    // kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.21"
+    // room database
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+}

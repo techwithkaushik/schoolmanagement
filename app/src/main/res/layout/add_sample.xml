@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="student"
+            type="com.ask2784.schoolmanagemant.models.Student" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="16dp"
+        android:layout_marginTop="3dp"
+        app:contentPaddingBottom="2dp"
+        app:contentPaddingTop="2dp"
+        app:contentPaddingRight="8dp"
+        app:contentPaddingLeft="8dp"
+        app:cardBackgroundColor="#ffcff0c0"
+        app:cardElevation="1dp"
+        app:cardMaxElevation="2dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/new_name"
+                    android:text="@{student.getName()}" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/new_class_name"
+                    android:text="@{student.getClassName()}" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:id="@+id/delete_added"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

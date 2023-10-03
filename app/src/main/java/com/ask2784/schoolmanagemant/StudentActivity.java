@@ -1,22 +1,18 @@
 package com.ask2784.schoolmanagemant;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.ask2784.schoolmanagemant.adapters.NewStudentAdapter;
-import com.ask2784.schoolmanagemant.adapters.StudentItemDecorator;
 import com.ask2784.schoolmanagemant.databinding.ActivityStudentBinding;
 import com.ask2784.schoolmanagemant.models.Student;
 import com.ask2784.schoolmanagemant.utils.Utils;
@@ -63,7 +59,7 @@ public class StudentActivity extends AppCompatActivity {
     private NewStudentAdapter adapter;
 
     private void initRecyclerView() {
-        binding.addRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.addRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         adapter = new NewStudentAdapter();
         binding.addRecyclerView.setAdapter(adapter);
         adapter.setOnDelete(new NewStudentAdapter.OnNewAddClickListener(){
@@ -72,7 +68,7 @@ public class StudentActivity extends AppCompatActivity {
                 public void onDelete(int position) {
                     ArrayList<Student> list = new ArrayList<>(adapter.getCurrentList());
                     list.remove(position);
-                    getSupportActionBar().setSubtitle("Total Students: " + list.size());
+                    getSupportActionBar().setSubtitle(list.size() > 1 ? "Total Students: " + list.size() : "Total Student: " + list.size());
                     adapter.submitList(list);
                 }
             });

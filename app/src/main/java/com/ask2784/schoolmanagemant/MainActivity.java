@@ -19,7 +19,6 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ask2784.schoolmanagemant.adapters.StudentAdapter;
-import com.ask2784.schoolmanagemant.adapters.StudentItemDecorator;
 import com.ask2784.schoolmanagemant.database.StudentRepo;
 import com.ask2784.schoolmanagemant.databinding.ActivityMainBinding;
 import com.ask2784.schoolmanagemant.models.Student;
@@ -81,13 +80,16 @@ public class MainActivity extends AppCompatActivity {
         binding.searchBy.setOnFocusChangeListener((v,hasFocus)->{
                 if(hasFocus) binding.searchByLyt.setHint("");
                 else {
-                    binding.searchBy.setText("");
-                    binding.searchBy.postDelayed( new Runnable(){
-                            @Override
-                            public void run() {
-                                binding.searchByLyt.setHint("Search");
-                            }
-                    },120);
+                    if(!binding.searchBy.getText().toString().isEmpty()){
+                        binding.searchByLyt.setHint("");
+                    } else {
+                        binding.searchBy.postDelayed( new Runnable(){
+                                @Override
+                                public void run() {
+                                    binding.searchByLyt.setHint("Search");
+                                }
+                        },120);
+                    }
                 }
             });
         
@@ -106,9 +108,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void initRecyclerView() {
-        // StudentItemDecorator decorator = new StudentItemDecorator((int) getResources().getDimension(R.dimen.itemMargin));
         binding.mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // binding.mainRecyclerView.addItemDecoration(decorator);
         adapter = new StudentAdapter();
         binding.mainRecyclerView.setAdapter(adapter);
         adapter.setOnItemClick(new StudentAdapter.OnClickListener(){
@@ -177,7 +177,15 @@ public class MainActivity extends AppCompatActivity {
             setAdapterData(originalList);
         }
          else if (itemId == R.id.delete_all) {
-        	deleteStudent();
+            List<Student> deletedList = new ArrayList<>(originalList);
+            deleteStudent();
+            Snackbar.make(binding.getRoot(), "ALL Deleted",Snackbar.LENGTH_SHORT)
+                .setAction("Undo",v->{
+                    for (Student st : deletedList){
+                        repo.insert(st);
+                    }
+                })
+            .show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -200,15 +208,15 @@ public class MainActivity extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),this::onLaunchActivityResult);
     
     public void onLaunchActivityResult(ActivityResult result) {
+        
     	if(result.getResultCode() == RESULT_OK) {
     		Intent data = result.getData();
             if(data != null) {
                 boolean isAdd = data.getBooleanExtra("isAdd",false);
                 boolean isUpdate = data.getBooleanExtra("isUpdate",false);
                 boolean isDelete = data.getBooleanExtra("isDelete",false);
-                
                 if (isDelete) {
-                    Student st = (Student) data.getSerializableExtra("student");
+                    final Student st = (Student) data.getSerializableExtra("student");
                     repo.delete(st);
                     Snackbar.make(binding.getRoot(), st.getName() +" of Class "+st.getClassName()+ " is Deleted",Snackbar.LENGTH_SHORT)
                         .setAction("Undo",v->{
@@ -217,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     .show();
                 };
                 if(isUpdate) {
-                    Student st = (Student) data.getSerializableExtra("student");
+                    final Student st = (Student) data.getSerializableExtra("student");
                     repo.update(st);
                     Snackbar.make(binding.getRoot(), st.getName() + " is Updated",Snackbar.LENGTH_SHORT)
                         .setAction("Undo",v->{
@@ -234,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                             newList.get(index).setId(idList.get(index));
                         }
                         Snackbar.make(binding.getRoot(), newList.size()+" are added",Snackbar.LENGTH_SHORT)
-                        .setAction("Undo",v->{
+                            .setAction("Undo",v->{
                                 for(Student st : newList) {
                                     repo.delete(st);
                                 }

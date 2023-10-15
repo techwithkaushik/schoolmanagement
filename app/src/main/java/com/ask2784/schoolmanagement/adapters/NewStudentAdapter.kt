@@ -1,11 +1,11 @@
-package com.ask2784.schoolmanagemant.adapters
+package com.ask2784.schoolmanagement.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ask2784.schoolmanagemant.databinding.AddSampleBinding
-import com.ask2784.schoolmanagemant.models.Student
+import com.ask2784.schoolmanagement.databinding.AddSampleBinding
+import com.ask2784.schoolmanagement.models.Student
 
 class NewStudentAdapter : ListAdapter<Student, NewStudentAdapter.ViewHolder>(StudentCallback.newItemCallback) {
 

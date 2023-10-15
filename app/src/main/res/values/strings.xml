@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">School Managemant</string>
-    <string-array name="filterby">
-        <item>Name</item>
-        <item>Father Name</item>
-        <item>By Class</item>
+    <string name="app_name">School Management</string>
+    
+    <string-array name="sen_sec_subjects">
+        <item>Hindi</item>
+        <item>English</item>
+        <item>Physics</item>
+        <item>Chemistry</item>
+        <item>Maths</item>
+    </string-array>
+    
+    <string-array name="sec_subjects">
+        <item>Hindi</item>
+        <item>English</item>
+        <item>Maths</item>
+        <item>Science</item>
+        <item>Social Science</item>
+        <item>Sanskrit</item>
+        <item>Art</item>
     </string-array>
     
     <string-array name="classes">
         <item>Nursery</item>
         <item>L.K.G.</item>
         <item>U.K.G.</item>
-        <item>1st</item>
-        <item>2nd</item>
-        <item>3rd</item>
-        <item>4th</item>
-        <item>5th</item>
-        <item>6th</item>
-        <item>7th</item>
-        <item>8th</item>
-        <item>9th</item>
+        <item>01st</item>
+        <item>02nd</item>
+        <item>03rd</item>
+        <item>04th</item>
+        <item>05th</item>
+        <item>06th</item>
+        <item>07th</item>
+        <item>08th</item>
+        <item>09th</item>
         <item>10th</item>
         <item>11th</item>
         <item>12th</item>

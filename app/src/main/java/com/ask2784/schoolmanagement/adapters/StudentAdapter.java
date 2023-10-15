@@ -1,4 +1,4 @@
-package com.ask2784.schoolmanagemant.adapters;
+package com.ask2784.schoolmanagement.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ask2784.schoolmanagemant.databinding.StudentSampleBinding;
-import com.ask2784.schoolmanagemant.models.Student;
+import com.ask2784.schoolmanagement.databinding.StudentSampleBinding;
+import com.ask2784.schoolmanagement.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;

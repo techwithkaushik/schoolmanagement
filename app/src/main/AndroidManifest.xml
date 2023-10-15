@@ -3,6 +3,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -12,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop"
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action
@@ -24,7 +25,23 @@
         </activity>
         <activity
             android:name=".StudentActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminActivity"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TeacherActivity"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

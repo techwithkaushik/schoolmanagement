@@ -30,7 +30,7 @@
             app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
             app:boxCornerRadiusBottomStart="50dp"
             app:boxStrokeWidthFocused="0dp"
-            app:boxBackgroundColor="#9acff0c0"
+            app:boxBackgroundColor="#ffdfdfef"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:startIconDrawable="@drawable/ic_filter_menu"
             android:id="@+id/searchByLyt">
@@ -39,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:importantForAutofill="no"
-                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
                 android:id="@+id/searchBy" />
 
         </com.google.android.material.textfield.TextInputLayout>

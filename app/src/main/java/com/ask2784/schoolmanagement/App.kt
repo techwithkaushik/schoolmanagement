@@ -1,4 +1,4 @@
-package com.ask2784.schoolmanagemant
+package com.ask2784.schoolmanagement
 
 import android.app.Application
 import com.google.android.material.color.DynamicColors

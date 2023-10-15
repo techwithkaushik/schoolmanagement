@@ -1,11 +1,11 @@
-package com.ask2784.schoolmanagemant.adapters
+package com.ask2784.schoolmanagement.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.ask2784.schoolmanagemant.models.Student
+import com.ask2784.schoolmanagement.models.Student
 
 object StudentCallback {
     
-    val itemCallback: DiffUtil.ItemCallback<Student> get()  = object : DiffUtil.ItemCallback<Student>() {
+    val itemCallback = object : DiffUtil.ItemCallback<Student>() {
         override fun areItemsTheSame(oldStudent: Student, newStudent: Student) =
             oldStudent.id == newStudent.id
 

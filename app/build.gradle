@@ -1,16 +1,16 @@
-
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'com.ask2784.schoolmanagemant'
+    namespace 'com.ask2784.schoolmanagement'
     compileSdk 34
     
     defaultConfig {
-        applicationId "com.ask2784.schoolmanagemant"
+        applicationId "com.ask2784.schoolmanagement"
         minSdk 21
         targetSdk 34
         versionCode 1
@@ -58,16 +58,19 @@ android {
 }
 
 dependencies {
-    def room_version = "2.6.0-rc01"
-
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "com.google.android.material:material:1.9.0"
+    implementation "com.google.android.material:material:1.10.0"
     
     // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.21"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.10"
     // room database
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:2.6.0-rc01"
+    annotationProcessor "androidx.room:room-compiler:2.6.0-rc01"
+    kapt "androidx.room:room-compiler:2.6.0-rc01"
+    
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation "com.google.firebase:firebase-auth"
+    implementation "com.google.firebase:firebase-firestore"
 }

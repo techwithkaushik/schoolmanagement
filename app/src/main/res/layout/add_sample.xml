@@ -6,7 +6,7 @@
     <data>
         <variable
             name="student"
-            type="com.ask2784.schoolmanagemant.models.Student" />
+            type="com.ask2784.schoolmanagement.models.Student" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -18,7 +18,7 @@
         app:contentPaddingTop="2dp"
         app:contentPaddingRight="8dp"
         app:contentPaddingLeft="8dp"
-        app:cardBackgroundColor="#ffcff0c0"
+        app:cardBackgroundColor="#ffdfdfef"
         app:cardElevation="1dp"
         app:cardMaxElevation="2dp"
         app:cardPreventCornerOverlap="true">

@@ -1,4 +1,4 @@
-package com.ask2784.schoolmanagemant;
+package com.ask2784.schoolmanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,30 +18,37 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ask2784.schoolmanagemant.adapters.StudentAdapter;
-import com.ask2784.schoolmanagemant.database.StudentRepo;
-import com.ask2784.schoolmanagemant.databinding.ActivityMainBinding;
-import com.ask2784.schoolmanagemant.models.Student;
+import com.ask2784.schoolmanagement.adapters.StudentAdapter;
+import com.ask2784.schoolmanagement.database.StudentRepo;
+import com.ask2784.schoolmanagement.databinding.ActivityMainBinding;
+import com.ask2784.schoolmanagement.models.Student;
+import com.ask2784.schoolmanagement.utils.Utils;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener{
+    
+    
     private ActivityMainBinding binding;
     private StudentAdapter adapter;
     private List<Student> originalList = new ArrayList<>();
     private StudentRepo repo;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mAuth = FirebaseAuth.getInstance();
         initToolBar();
         initRecyclerView();
         initDataFromDataBase();
+        Utils.setupUI(binding.getRoot(),this);
     }
     
     Student oldStudent;
@@ -175,18 +182,12 @@ public class MainActivity extends AppCompatActivity {
         	addNewStudent();
         } else if (itemId == R.id.filter_off) {
             setAdapterData(originalList);
+        } else if (itemId == R.id.delete_all) {
+            deleteAllStudent();
+        } else if (itemId == R.id.logout) {
+            if (mAuth.getCurrentUser() != null) mAuth.signOut();
         }
-         else if (itemId == R.id.delete_all) {
-            List<Student> deletedList = new ArrayList<>(originalList);
-            deleteStudent();
-            Snackbar.make(binding.getRoot(), "ALL Deleted",Snackbar.LENGTH_SHORT)
-                .setAction("Undo",v->{
-                    for (Student st : deletedList){
-                        repo.insert(st);
-                    }
-                })
-            .show();
-        }
+        
         return super.onOptionsItemSelected(item);
     }
     
@@ -200,41 +201,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("isEdit",false);
         launcher.launch(intent);
     }
-
-    private void deleteStudent() {
-        repo.deleteAllStudent();
-    }
     
-    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),this::onLaunchActivityResult);
-    
-    public void onLaunchActivityResult(ActivityResult result) {
-        
-    	if(result.getResultCode() == RESULT_OK) {
-    		Intent data = result.getData();
-            if(data != null) {
-                boolean isAdd = data.getBooleanExtra("isAdd",false);
-                boolean isUpdate = data.getBooleanExtra("isUpdate",false);
-                boolean isDelete = data.getBooleanExtra("isDelete",false);
-                if (isDelete) {
-                    final Student st = (Student) data.getSerializableExtra("student");
-                    repo.delete(st);
-                    Snackbar.make(binding.getRoot(), st.getName() +" of Class "+st.getClassName()+ " is Deleted",Snackbar.LENGTH_SHORT)
-                        .setAction("Undo",v->{
-                            repo.insert(st);
-                        })
-                    .show();
-                };
-                if(isUpdate) {
-                    final Student st = (Student) data.getSerializableExtra("student");
-                    repo.update(st);
-                    Snackbar.make(binding.getRoot(), st.getName() + " is Updated",Snackbar.LENGTH_SHORT)
-                        .setAction("Undo",v->{
-                            repo.update(oldStudent);
-                        })
-                    .show();
-                }
-                if(isAdd) {
-                    ArrayList<Student> newList = new ArrayList<>((ArrayList<Student>) data.getSerializableExtra("student_list"));
+    private void addStudents(Intent data) {
+    	ArrayList<Student> newList = new ArrayList<>((ArrayList<Student>) data.getSerializableExtra("student_list"));
                     if(!newList.isEmpty()) {
                         List<Long> idList = new ArrayList<>();
                         for(int index = 0; newList.size() > index; index++) {
@@ -249,6 +218,57 @@ public class MainActivity extends AppCompatActivity {
                             })
                         .show();
                     }
+    }
+    
+    private void updateStudent(Intent data) {
+        final Student st = (Student) data.getSerializableExtra("student");
+        repo.update(st);
+        Snackbar.make(binding.getRoot(), st.getName() + " is Updated",Snackbar.LENGTH_SHORT)
+            .setAction("Undo",v->{
+                repo.update(oldStudent);
+            })
+        .show();
+    }
+    
+    public void deleteStudent(Intent data) {
+        final Student st = (Student) data.getSerializableExtra("student");
+        repo.delete(st);
+        Snackbar.make(binding.getRoot(), st.getName() +" of Class "+st.getClassName()+ " is Deleted",Snackbar.LENGTH_SHORT)
+            .setAction("Undo",v->{
+                repo.insert(st);
+            })
+        .show();
+    }
+
+    private void deleteAllStudent() {
+        List<Student> deletedList = new ArrayList<>(originalList);
+        repo.deleteAllStudent();
+        Snackbar.make(binding.getRoot(), "ALL Deleted",Snackbar.LENGTH_SHORT)
+            .setAction("Undo",v->{
+                for (Student st : deletedList){
+                    repo.insert(st);
+                }
+            })
+        .show();
+    }
+    
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),this::onLaunchActivityResult);
+    
+    public void onLaunchActivityResult(ActivityResult result) {
+        if(result.getResultCode() == RESULT_OK) {
+            Intent data = result.getData();
+            if(data != null) {
+                boolean isAdd = data.getBooleanExtra("isAdd",false);
+                boolean isUpdate = data.getBooleanExtra("isUpdate",false);
+                boolean isDelete = data.getBooleanExtra("isDelete",false);
+                if (isDelete) {
+                    deleteStudent(data);
+                };
+                if(isUpdate) {
+                    updateStudent(data);
+                }
+                if(isAdd) {
+                    addStudents(data);
                 }
             }
         }
@@ -258,5 +278,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         this.binding = null;
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(this);
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(this);
+    }
+    
+    @Override
+    public void onAuthStateChanged(FirebaseAuth auth) {
+        if(auth.getCurrentUser() == null){
+            startLoginActivity();
+        }
+    }
+    
+    private void startLoginActivity() {
+        Intent i = new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }

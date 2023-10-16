@@ -32,10 +32,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener{
     
-    
     private ActivityMainBinding binding;
     private StudentAdapter adapter;
     private List<Student> originalList = new ArrayList<>();
+    private Student oldStudent;
     private StudentRepo repo;
     private FirebaseAuth mAuth;
 
@@ -51,10 +51,8 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         Utils.setupUI(binding.getRoot(),this);
     }
     
-    Student oldStudent;
-    
     private void initToolBar() {
-    	setSupportActionBar(binding.toolbar);
+        setSupportActionBar(binding.toolbar);
         
         binding.searchByLyt.setStartIconOnClickListener(v->{
                 PopupMenu filterMenu = new PopupMenu(this,v);
@@ -68,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 });
                 filterMenu.show();
         });
+        
         binding.searchBy.addTextChangedListener(new TextWatcher(){
                 
                 @Override
-                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                }
+                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
                 
                 @Override
                 public void onTextChanged(CharSequence keyword, int arg1, int arg2, int arg3) {
@@ -80,8 +78,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 }
                 
                 @Override
-                public void afterTextChanged(Editable arg0) {
-                }
+                public void afterTextChanged(Editable arg0) {}
         });
         
         binding.searchBy.setOnFocusChangeListener((v,hasFocus)->{
@@ -144,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     private void showRecyclerView(int totalStudent) {
         binding.totalStudent.setText(totalStudent > 1 ? "Total Students " + totalStudent : " Total Student " + totalStudent);
         binding.totalStudent.setVisibility(totalStudent > 0 ?View.VISIBLE:View.INVISIBLE);
-    	binding.mainRecyclerView.setVisibility(totalStudent > 0 ?View.VISIBLE:View.INVISIBLE);
+        binding.mainRecyclerView.setVisibility(totalStudent > 0 ?View.VISIBLE:View.INVISIBLE);
         binding.emptyList.setVisibility(totalStudent > 0 ?View.INVISIBLE:View.VISIBLE);
     }
     
@@ -179,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         int itemId = item.getItemId();
         
         if (itemId == R.id.add_new) {
-        	addNewStudent();
+            addNewStudent();
         } else if (itemId == R.id.filter_off) {
             setAdapterData(originalList);
         } else if (itemId == R.id.delete_all) {
@@ -203,21 +200,19 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     }
     
     private void addStudents(Intent data) {
-    	ArrayList<Student> newList = new ArrayList<>((ArrayList<Student>) data.getSerializableExtra("student_list"));
-                    if(!newList.isEmpty()) {
-                        List<Long> idList = new ArrayList<>();
-                        for(int index = 0; newList.size() > index; index++) {
-                            idList.add(repo.insert(newList.get(index)));
-                            newList.get(index).setId(idList.get(index));
-                        }
-                        Snackbar.make(binding.getRoot(), newList.size()+" are added",Snackbar.LENGTH_SHORT)
-                            .setAction("Undo",v->{
-                                for(Student st : newList) {
-                                    repo.delete(st);
-                                }
-                            })
-                        .show();
+        List<Student> newList = (List<Student>) data.getSerializableExtra("student_list");
+        if(!newList.isEmpty()) {
+            for(int index = 0; newList.size() > index; index++) {
+                newList.get(index).setId(repo.insert(newList.get(index)));
+            }
+            Snackbar.make(binding.getRoot(), newList.size()+" are added",Snackbar.LENGTH_SHORT)
+                .setAction("Undo",v->{
+                    for(Student st : newList) {
+                        repo.delete(st);
                     }
+                })
+            .show();
+        }
     }
     
     private void updateStudent(Intent data) {

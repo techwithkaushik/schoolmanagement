@@ -17,11 +17,11 @@ import com.ask2784.schoolmanagement.adapters.NewStudentAdapter;
 import com.ask2784.schoolmanagement.database.StudentResultRepo;
 import com.ask2784.schoolmanagement.databinding.ActivityStudentBinding;
 import com.ask2784.schoolmanagement.models.Student;
-import com.ask2784.schoolmanagement.models.StudentResult;
 import com.ask2784.schoolmanagement.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class StudentActivity extends AppCompatActivity {
     
@@ -79,8 +79,8 @@ public class StudentActivity extends AppCompatActivity {
                 public void onDelete(int position) {
                     ArrayList<Student> list = new ArrayList<>(adapter.getCurrentList());
                     list.remove(position);
-                    getSupportActionBar().setSubtitle(list.size() > 1 ? "Total Students: " + list.size() : "Total Student: " + list.size());
                     adapter.submitList(list);
+                    getSupportActionBar().setSubtitle(list.size() > 1 ? "Total Students: " + list.size() : "Total Student: " + list.size());
                 }
             });
     }
@@ -214,11 +214,11 @@ public class StudentActivity extends AppCompatActivity {
                 // add new as list
                 ArrayList<Student> addList = new ArrayList<>(adapter.getCurrentList());
                 if(addList.size() > 0){
-                Intent intent = new Intent();
-                intent.putExtra("student_list",addList);
-                intent.putExtra("isAdd",!isEdit);
-                setResult(RESULT_OK,intent);
-                finish();
+                    Intent intent = new Intent();
+                    intent.putExtra("student_list",addList);
+                    intent.putExtra("isAdd",!isEdit);
+                    setResult(RESULT_OK,intent);
+                    finish();
                 }else{
                     Toast.makeText(this,"Add Student First",Toast.LENGTH_LONG).show();
                 }

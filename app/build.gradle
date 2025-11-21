@@ -63,11 +63,11 @@ dependencies {
     implementation "com.google.android.material:material:1.13.0"
     
     // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.20"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.21"
     // room database
-    implementation "androidx.room:room-runtime:2.7.2"
-    annotationProcessor "androidx.room:room-compiler:2.7.2"
-    kapt "androidx.room:room-compiler:2.7.2"
+    implementation "androidx.room:room-runtime:2.8.4"
+    annotationProcessor "androidx.room:room-compiler:2.8.4"
+    kapt "androidx.room:room-compiler:2.8.4"
     
     // firebase
     implementation platform('com.google.firebase:firebase-bom:32.8.1')
